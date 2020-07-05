@@ -32,11 +32,16 @@ const Text = styled.h1`
 
 const Input = styled.input`
 	min-width : 300px;
-	min-height : 35px;
+	min-height : 40px;
 	border-radius : ${props=>props.BorderRadius || "0"}
 	border : 0;
 	&::placeholder {
-		color : blue;
+		color : gray;
+	}
+	&::focus{
+		outline :10px solid;
+        border-color : rgba(108,108,200,0.8);
+	
 	}
 `
 const Button = styled.button`
