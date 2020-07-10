@@ -1,5 +1,6 @@
 import React , { Component } from 'react';
 import styled , { createGlobalStyle } from 'styled-components';
+import axios from 'axios';
 
 const GlobalStyle = createGlobalStyle`
 body {
@@ -37,14 +38,20 @@ const Input = styled.input`
 	border : 0;
 	&::placeholder {
 		color : gray;
+		font-size : 15px;
+		padding-left : 5px;
 	}
-	&::focus{
-		outline :10px solid;
-        border-color : rgba(108,108,200,0.8);
+	&:focus{
+		outline :5px solid;
+        outline-color : rgba(0,123,255,0.3);
+		font-color : black;
+		z-index:10;
+		position : relative;
 	
 	}
 `
 const Button = styled.button`
+	margin-top : 10px;
 	min-width : 310px;
 	min-height : 45px;
 	background-color : rgb(0,123,255);
@@ -60,14 +67,28 @@ const Button = styled.button`
 `
 
 class Login extends Component {
+	state = {
+		userEmail : "" ,
+		userPwd : ""
+	}
+	constructor(props){
+		super(props);
+		
+	}
+
+	handleSubmit(e){
+		e.preventDefault();
+	
+	}
 	
 	render(){
 		return(
 			<Container>
 				<GlobalStyle/>
 				<Form>
+					<img src ="/login.svg" width = "100px"></img>
 					<Text>Please sign in</Text>
-					<Input type="text" placeholder = "Email address"></Input><br/>
+					<Input type="text" placeholder = "Email address" BorderRadius = "10px 20px 30px"></Input><br/>
 					<Input type="password"  placeholder = "Password"></Input><br/>
 					<Button>Sign in</Button>
 				</Form>
