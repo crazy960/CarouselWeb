@@ -15,7 +15,7 @@ const Container = styled.div`
 	background-color : rgb(52,74,113);
 	align-items : center;
 	justify-content : center;
-	display : flex;
+	display : flex; 
 	position : fixed;
 	
 `
@@ -73,13 +73,13 @@ const InputBox = styled.div`
 const InputBoxContainer = styled.div`
 	display : flex;
 	flex-direction : column;
-	height : 400px;
+	height : 310px;
 `
 const Button = styled.button`
 	
 	background-color : rgb(73,193,162);
 	width : 340px;
-	height : 40px;
+	height : 50px;
 	border : 0;
 	color : white;
 	border : 0;
@@ -95,10 +95,86 @@ const Button = styled.button`
 `
 
 class Signup extends Component {
+	
+	state = {
+		username : "" ,
+		useremail : "" , 
+		userpassword : "" ,
+		
+		isNameValid : false ,
+		isEmailValid : false ,
+		isPasswordValid : false ,
+
+	}
+
+	constructor(props){
+		super(props);
+		this.handleSubmit = this.handleSubmit.bind(this);
+		this.handleNameChange = this.handleNameChange.bind(this);
+		this.handleEmailChange = this.handleEmailChange.bind(this);
+		this.handlePasswordChange = this.handlePasswordChange.bind(this);
+	
+		
+	}
+
+	handleSubmit(e){
+		
+	}
+
+	handleNameChange(e){
+
+		if(e.target.value.length > 1)
+			this.setState({
+				isNameValid : true ,
+				username : e.target.value
+			});
+		else
+			this.setState({
+				isNameValid : false ,
+				username : e.target.value
+			});
+		
+		
+	}
+	handleEmailChange(e){
+
+		if(e.target.value.indexOf("@") >= 0)
+			this.setState({
+				isEmailValid : true ,
+				useremail : e.target.value
+			});
+		else
+			this.setState({
+				isEmailValid : false ,
+				useremail : e.target.value
+			});
+		
+		
+	}
+	handlePasswordChange(e){
+
+		if(e.target.value.length > 8)
+			this.setState({
+				isPasswordValid : true ,
+				userpassword : e.target.value
+			});
+		else
+			this.setState({
+				isPasswordValid : false ,
+				userpassword : e.target.value
+			});
+		
+
+	}
+
+	
+
+
 	render(){
 		return(<Container>
 				<GlobalStyle/>
-				<FormContainer>
+				
+					<FormContainer onSubmit = {this.handleSubmit}>
 					<Top>
 						<div>
 							<Text FontSize="30px" FontWeight="700" Width = "340px">Sign Up</Text>
@@ -108,25 +184,23 @@ class Signup extends Component {
 					<InputBoxContainer>
 						<InputBox Top = "20px">
 							<Text Color="rgb(155,173,199)" Width = "340px" Margin="0 0 10px 0">Username</Text>
-							<Input></Input>
+							<Input value = {this.state.username} onChange = {this.handleNameChange} name = "username"></Input>
 						</InputBox>
 						<InputBox Top = "20px">
 							<Text Color="rgb(155,173,199)" Width = "340px" Margin="0 0 10px 0">Email</Text>
-							<Input></Input>
+							<Input value = {this.state.useremail} onChange = {this.handleEmailChange} name = "useremail"></Input>
 						</InputBox>
 						<InputBox Top = "20px">
 							<Text Color="rgb(155,173,199)" Width = "340px" Margin="0 0 10px 0">Password</Text>
-							<Input></Input>
+							<Input value = {this.state.password} onChange = {this.handlePasswordChange} name = "userpassword"></Input>
 						</InputBox>
-						<InputBox Top = "20px">
-							<Text Color="rgb(155,173,199)" Width = "340px" Margin="0 0 10px 0">Confirm Password</Text>
-							<Input></Input>
-						</InputBox>
+						
 					</InputBoxContainer>
 					<br/>
 					<Button>Sign up</Button>
 					
-				</FormContainer>
+					</FormContainer>
+
 				
 			  </Container>);
 	}
