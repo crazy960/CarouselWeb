@@ -5,12 +5,13 @@ import Nav from './component/Nav';
 import NavSlide from './component/NavSlide';
 import Login from './Login';
 import Signup from './Signup';
+import Main from './Main'
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-		  <Signup></Signup>
+		  <Main></Main>
     </div>
   );
 }

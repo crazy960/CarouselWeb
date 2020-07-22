@@ -40,7 +40,7 @@ class Nav extends Component {
 				<Button Width = "50px" MarginLeft="2px">Home</Button>
 				<Button FontColor="rgb(148,157,160)" Width = "50px" MarginLeft="2px">Link</Button>
 				<Button FontColor="rgb(148,157,160)" Width = "80px">Dropdown</Button>
-				<Button FontSize = "1.0rem" Color = "rgb(108,117,125)" HoverColor="rgb(90,98,104)" MarginLeft = "70%" >Log In</Button>
+				<Button FontSize = "1.0rem" Color = "rgb(108,117,125)" HoverColor="rgb(90,98,104)" MarginLeft = "70vw" >Log In</Button>
 				<Button FontSize = "1.0rem" Color = "rgb(108,117,125)" HoverColor="rgb(90,98,104)" MarginLeft = "10px" >SignUp</Button>
 				
 			</Container>
