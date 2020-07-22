@@ -78,10 +78,17 @@ const Arrow = styled.div`
  		display: block;
  		width: 10px;
 		height: 10px;
- 		border-top: 6px solid rgb(187,187,187);
- 		border-right: 6px solid rgb(187,187,187);
- 		-webkit-transform: ${props=>props.Right ? "rotate(45deg)" : "rotate(-135deg)"};
- 		transform: ${props=>props.Right ? "rotate(45deg)" : "rotate(-135deg)"};
+		${props=>props.Right && css`
+			border-top: 6px solid rgb(187,187,187);
+ 			border-right: 6px solid rgb(187,187,187);
+		`}
+		${props=>props.Left && css`
+			border-top: 6px solid rgb(187,187,187);
+ 			border-left: 6px solid rgb(187,187,187);
+		`}
+ 		
+ 		-webkit-transform: ${props=>props.Right ? "rotate(45deg)" : "rotate(-45deg)"};
+ 		transform: ${props=>props.Right ? "rotate(45deg)" : "rotate(-45deg)"};
  		position: absolute;
  		left: 50%;
  		top: 50%;
@@ -90,8 +97,15 @@ const Arrow = styled.div`
 	}
 	&:hover:after{
 		
- 		border-top: 6px solid rgb(234,234,234);
- 		border-right: 6px solid rgb(234,234,234);
+		${props=>props.Right && css`
+			border-top: 6px solid rgb(234,234,234);
+ 			border-right: 6px solid rgb(234,234,234);
+		`}
+		${props=>props.Left && css`
+			border-top: 6px solid rgb(234,234,234);
+ 			border-left: 6px solid rgb(234,234,234);
+		`}
+ 		
 	}
 	&:hover{
 		cursor:pointer;
@@ -103,7 +117,7 @@ class NavSlide extends Component {
 	render(){
 		return(
 				<Container>
-					<Arrow></Arrow>
+					<Arrow Left></Arrow>
 					<Arrow Right></Arrow>
 					<Content>
 						<TextContainer Left>
