@@ -10,14 +10,24 @@ const Container = styled.div`
 
 `
 
+const DotContainer = styled.div`
+	width : 100vw;
+`
+
+const Dot = styled.div`
+
+`
+
 const Content = styled.div`
-	left : ${props=>props.Left || 0};
+	left : ${/*props=>props.Left ||*/ 0 };
 	height : 450px;
 	width : 100vw;
 	background-color : transparent;
 	position : absolute;
 	color : white;
 	top: 0;
+	transform : ${props=>props.posX};
+	transition: transform 1.0s ;
 
 `
 
@@ -114,32 +124,62 @@ const Arrow = styled.div`
 `
 
 class NavSlide extends Component {
+	state = {
+		pos : [0, 100 , 200]
+	}
+
+	onHandleArrow(e){
+		var update = [];
+		if(e.target.id === "left"){
+			for( var i=0; i<this.state.pos.length ; i++){
+				update[i] = (this.state.pos[i] + 100);
+				if(update[i] < -200 || update[i] > 200)
+					return;
+			}
+			
+		}
+		else{
+			
+			for( var i=0; i<this.state.pos.length ; i++){
+				update[i] = (this.state.pos[i] - 100);
+				if(update[i] < -200 || update[i] > 200)
+					return;
+				
+			}
+		}
+		
+		this.setState({ pos : update});
+	}
 	render(){
 		return(
 				<Container>
-					<Arrow Left></Arrow>
-					<Arrow Right></Arrow>
-					<Content>
+					<Arrow id="left" Left onClick = {this.onHandleArrow.bind(this)}></Arrow>
+					<Arrow id="right" Right onClick = {this.onHandleArrow.bind(this)}></Arrow>
+					<Content posX = {`translateX(${this.state.pos[0]}%)`}>
 						<TextContainer Left>
 							<Text>Example headline.</Text>
 							<P>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</P>
 							<Button>Sign up Today</Button>
 						</TextContainer>
 					</Content>
-					<Content Left = "100vw" >
+					<Content posX = {`translateX(${this.state.pos[1]}%)`} >
 						<TextContainer Center>
 							<Text>Another example headline.</Text>
-							<p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+							<P>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</P>
 							<Button>Learn more</Button>
 						</TextContainer>
 					</Content>
-					<Content Left = "200vw">
+					<Content posX = {`translateX(${this.state.pos[2]}%)`}>.
 						<TextContainer Right>
 							<Text>One more for good measure.</Text>
-							<p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+							<P>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</P>
 							<Button>Browse gallery</Button>
 						</TextContainer>
 			    	</Content>
+				
+				<DotContainer>
+				</DotContainer>
+				
 				</Container>
 		);
 	}
