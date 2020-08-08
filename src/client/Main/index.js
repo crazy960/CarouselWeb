@@ -5,10 +5,22 @@ import NavSlide from '../component/NavSlide';
 
 
 class Main extends Component {
+	state = {
+		buttons : [
+			{
+				text : "Log In" ,
+				path : "login"
+			},
+			{
+				text : "Sign Up" ,
+				path : "signup"
+			}
+		]
+	}	
 	render(){
 		return(
 			<div>
-				<Nav></Nav>
+				<Nav btns = {this.state.buttons}></Nav>
 				<NavSlide></NavSlide>
 			</div>
 		);

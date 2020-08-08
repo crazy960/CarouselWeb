@@ -195,20 +195,20 @@ class NavSlide extends Component {
 		
 		
 	};
-	componentWillMount(){
-		console.log("componentWillMount");
-	}npm 
-	componentDidMount(){
-		console.log("componentDidMount");
-	}
-	componentDidUpdate(prevProps, prevState){
-		console.log("componentDidUpdate");
-		console.log(prevState);
-		console.log(prevProps);
+
+	constructor(props){
+		super(props);
+		
+		this.slideLeft =this. slideLeft.bind(this);
+		this.slideRight = this.slideRight.bind(this);
+
 		
 	}
 
-	onHandleArrow(e){
+	
+	
+
+	slideLeft(){
 		let pos = this.state.pos;
 		var update_pos = this.state.pos;
 		let active = this.state.activeIndex;
@@ -218,68 +218,87 @@ class NavSlide extends Component {
 		let update_slide = this.state.slide;
 		let update_animate = this.state.animate;
 		
+		next_active = (active - 1) < 0 ? 2 : (active - 1);
+		
+		update_slide[next_active].from = pos[active] - 100;
+		update_slide[next_active].to = pos[active];
+			
+		update_slide[active].from = pos[active];
+		update_slide[active].to = pos[active] + 100;
+			
+		hide[next_active] = false;
+		hide[active] = false;
+			
+		update_animate[next_active] = true;
+		update_animate[active] = true;
+			
+			
+		update_pos[active] = update_slide[active].to;
+		update_pos[next_active] = update_slide[next_active].to;
+			
+		active = next_active;
+			
+		this.setState({
+			pos : update_pos ,
+			hide : hide ,
+			slide : update_slide ,
+			activeIndex : active ,
+			animate : update_animate
+		});
+		
+		
+		
+	}
+	slideRight(){
+		let pos = this.state.pos;
+		var update_pos = this.state.pos;
+		let active = this.state.activeIndex;
+		let hide=this.state.hide;
+		let next_active;
+		
+		let update_slide = this.state.slide;
+		let update_animate = this.state.animate;
+		
+		next_active = (active + 1) % 3;
+			
+		update_slide[next_active].from = pos[active] + 100;
+		update_slide[next_active].to = pos[active];
+			
+		update_slide[active].from = pos[active];
+		update_slide[active].to = pos[active] - 100;
+			
+		hide[next_active] = false;
+		hide[active] = false;
+			
+		update_animate[next_active] = true;
+		update_animate[active] = true;
+			
+		update_pos[active] = update_slide[active].to;
+		update_pos[next_active] = update_slide[next_active].to;
+			
+		active = next_active;
+			
+		this.setState({
+			pos : update_pos ,
+			hide : hide ,
+			slide : update_slide ,
+			activeIndex : active ,
+			animate : update_animate
+		});
+	}
+
+
+	onHandleArrow(e){
+		
 		
 		if(e.target.id === "left"){
 			
-			next_active = (active - 1) < 0 ? 2 : (active - 1);
-			
-			
-			update_slide[next_active].from = pos[active] - 100;
-			update_slide[next_active].to = pos[active];
-			
-			update_slide[active].from = pos[active];
-			update_slide[active].to = pos[active] + 100;
-			
-			hide[next_active] = false;
-			hide[active] = false;
-			
-			update_animate[next_active] = true;
-			update_animate[active] = true;
-			
-			
-			update_pos[active] = update_slide[active].to;
-			update_pos[next_active] = update_slide[next_active].to;
-			
-			active = next_active;
-			
-			this.setState({
-				pos : update_pos ,
-				hide : hide ,
-				slide : update_slide ,
-				activeIndex : active ,
-				animate : update_animate
-			});
+			this.slideLeft();
 			
 		}
 		else{
 			
-			next_active = (active + 1) % 3;
-			
-			update_slide[next_active].from = pos[active] + 100;
-			update_slide[next_active].to = pos[active];
-			
-			update_slide[active].from = pos[active];
-			update_slide[active].to = pos[active] - 100;
-			
-			hide[next_active] = false;
-			hide[active] = false;
-			
-			update_animate[next_active] = true;
-			update_animate[active] = true;
-			
-			update_pos[active] = update_slide[active].to;
-			update_pos[next_active] = update_slide[next_active].to;
-			
-			active = next_active;
-			
-			this.setState({
-				pos : update_pos ,
-				hide : hide ,
-				slide : update_slide ,
-				activeIndex : active ,
-				animate : update_animate
-			});
-			
+			this.slideRight();
 			
 		}
 		
@@ -380,29 +399,7 @@ class NavSlide extends Component {
 					<Arrow id="left" Left onClick = {this.onHandleArrow.bind(this)}></Arrow>
 					<Arrow id="right" Right onClick = {this.onHandleArrow.bind(this)}></Arrow>
 					{contentLists}
-					{ /*
-					<Content posX = {`translateX(${this.state.pos[0]}%)`}>
-						<TextContainer Left>
-							<Text>Example headline.</Text>
-							<P>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</P>
-							<Button>Sign up Today</Button>
-						</TextContainer>
-					</Content>
-					<Content posX = {`translateX(${this.state.pos[1]}%)`} >
-						<TextContainer Center>
-							<Text>Another example headline.</Text>
-							<P>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</P>
-							<Button>Learn more</Button>
-						</TextContainer>
-					</Content>
-					<Content posX = {`translateX(${this.state.pos[2]}%)`}>.
-						<TextContainer Right>
-							<Text>One more for good measure.</Text>
-							<P>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</P>
-							<Button>Browse gallery</Button>
-						</TextContainer>
-			    	</Content>
-					*/}
+					
 				</SlideContainer>
 				
 				

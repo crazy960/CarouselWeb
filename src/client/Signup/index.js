@@ -1,5 +1,7 @@
 import React , { Component } from 'react';
 import styled , { createGlobalStyle }from 'styled-components';
+import { Redirect } from 'react-router-dom';
+import  axios from 'axios';
 
 const GlobalStyle = createGlobalStyle`
 body {
@@ -104,6 +106,8 @@ class Signup extends Component {
 		isNameValid : false ,
 		isEmailValid : false ,
 		isPasswordValid : false ,
+		
+		redirect : false
 
 	}
 
@@ -113,11 +117,68 @@ class Signup extends Component {
 		this.handleNameChange = this.handleNameChange.bind(this);
 		this.handleEmailChange = this.handleEmailChange.bind(this);
 		this.handlePasswordChange = this.handlePasswordChange.bind(this);
+		this.sendData = this.sendData.bind(this);
 	
 		
 	}
 
+	sendData(){
+		const url = "/api/users"
+		const signUp = {
+			name : this.state.username ,
+			email : this.state.useremail ,
+			password : this.state.userpassword
+			
+		}
+		
+		const config = {
+			headers : {
+			"Content-Type"  : "application/json"
+			}
+		}
+		
+		return axios.post(url , signUp , config);
+		
+		
+	}
+
 	handleSubmit(e){
+		
+		e.preventDefault();
+		
+		this.sendData()
+		.then( function(response){
+			console.log("success");
+			console.log(response.data);
+			console.log(response.status);
+			
+			this.setState({
+				redirect : true
+			})
+			
+			
+			
+		}.bind(this) , function(reject){
+			console.log("reject");
+			console.log(reject);
+			
+		})
+		.catch(function(err){
+			console.log("err");
+			if(err.response){
+				console.log(err.response.data);
+			}
+			else if(err.request){
+				console.log(err.request);
+			}
+			else{
+				console.log(err.message);
+			}
+		});;
+		
+		
+
+		
 		
 	}
 
@@ -169,35 +230,38 @@ class Signup extends Component {
 
 	
 
-
 	render(){
+		if(this.state.redirect)
+		{
+			return <Redirect to ="/"/>
+		}
 		return(<Container>
 				<GlobalStyle/>
 				
 					<FormContainer onSubmit = {this.handleSubmit}>
-					<Top>
-						<div>
-							<Text FontSize="30px" FontWeight="700" Width = "340px">Sign Up</Text>
-							<Text Color="rgb(155,173,199)" Width = "340px">it's free and only take a minutes</Text>
-						</div>
-					</Top>
-					<InputBoxContainer>
-						<InputBox Top = "20px">
-							<Text Color="rgb(155,173,199)" Width = "340px" Margin="0 0 10px 0">Username</Text>
-							<Input value = {this.state.username} onChange = {this.handleNameChange} name = "username"></Input>
-						</InputBox>
-						<InputBox Top = "20px">
-							<Text Color="rgb(155,173,199)" Width = "340px" Margin="0 0 10px 0">Email</Text>
-							<Input value = {this.state.useremail} onChange = {this.handleEmailChange} name = "useremail"></Input>
-						</InputBox>
-						<InputBox Top = "20px">
-							<Text Color="rgb(155,173,199)" Width = "340px" Margin="0 0 10px 0">Password</Text>
-							<Input value = {this.state.password} onChange = {this.handlePasswordChange} name = "userpassword"></Input>
-						</InputBox>
+						<Top>
+							<div>
+								<Text FontSize="30px" FontWeight="700" Width = "340px">Sign Up</Text>
+								<Text Color="rgb(155,173,199)" Width = "340px">it's free and only take a minutes</Text>
+							</div>
+						</Top>
+						<InputBoxContainer>
+							<InputBox Top = "20px">
+								<Text Color="rgb(155,173,199)" Width = "340px" Margin="0 0 10px 0">Username</Text>
+								<Input value = {this.state.username} onChange = {this.handleNameChange} name = "username"></Input>
+							</InputBox>
+							<InputBox Top = "20px">
+								<Text Color="rgb(155,173,199)" Width = "340px" Margin="0 0 10px 0">Email</Text>
+								<Input value = {this.state.useremail} onChange = {this.handleEmailChange} name = "useremail"></Input>
+							</InputBox>
+							<InputBox Top = "20px">
+								<Text Color="rgb(155,173,199)" Width = "340px" Margin="0 0 10px 0">Password</Text>
+								<Input value = {this.state.password} onChange = {this.handlePasswordChange} name = "userpassword"></Input>
+							</InputBox>
 						
-					</InputBoxContainer>
-					<br/>
-					<Button>Sign up</Button>
+						</InputBoxContainer>
+						<br/>
+						<Button>Sign up</Button>
 					
 					</FormContainer>
 
