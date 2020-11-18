@@ -193,8 +193,9 @@ class NavSlide extends Component {
 		btnText : [ "Sign up Today" , "Learn more" , "Browse gallery"] ,
 		textAlign : ["left" , "center" , "right"],
 		
-		
+		timer_id : 0
 	};
+	
 
 	constructor(props){
 		super(props);
@@ -205,7 +206,15 @@ class NavSlide extends Component {
 		
 	}
 
-	
+	componentDidMount(){
+		this.state.timer_id = setInterval(  this.slideLeft.bind(this) , 5000);
+	}
+	componentWillUnmount(){
+		clearInterval(this.state.timer_id);
+		this.state.timer_id = 0;
+	}
+
+
 	
 
 	slideLeft(){
@@ -246,6 +255,8 @@ class NavSlide extends Component {
 			animate : update_animate
 		});
 		
+
+		
 		
 		
 	}
@@ -285,6 +296,8 @@ class NavSlide extends Component {
 			activeIndex : active ,
 			animate : update_animate
 		});
+		
+
 	}
 
 
@@ -301,6 +314,7 @@ class NavSlide extends Component {
 			this.slideRight();
 			
 		}
+		
 		
 		
 						
@@ -366,6 +380,7 @@ class NavSlide extends Component {
 			});
 			
 		}
+
 		
 		
 		

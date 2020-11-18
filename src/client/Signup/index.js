@@ -107,7 +107,7 @@ class Signup extends Component {
 		isEmailValid : false ,
 		isPasswordValid : false ,
 		
-		redirect : false
+		isLogin : false
 
 	}
 
@@ -119,11 +119,19 @@ class Signup extends Component {
 		this.handlePasswordChange = this.handlePasswordChange.bind(this);
 		this.sendData = this.sendData.bind(this);
 	
+	}
+
+	componentDidMount(){
+		var user = localStorage.getItem('user');
+		if(user)
+			this.setState({ isLogin : true});
 		
 	}
 
+	
+
 	sendData(){
-		const url = "/api/users"
+		const url = "/api/users/create"
 		const signUp = {
 			name : this.state.username ,
 			email : this.state.useremail ,
@@ -134,7 +142,8 @@ class Signup extends Component {
 		const config = {
 			headers : {
 			"Content-Type"  : "application/json"
-			}
+			} ,
+			withCredentials: true
 		}
 		
 		return axios.post(url , signUp , config);
@@ -152,8 +161,10 @@ class Signup extends Component {
 			console.log(response.data);
 			console.log(response.status);
 			
+			localStorage.setItem('user',response.data);
+
 			this.setState({
-				redirect : true
+				isLogin : true
 			})
 			
 			
@@ -174,7 +185,7 @@ class Signup extends Component {
 			else{
 				console.log(err.message);
 			}
-		});;
+		});
 		
 		
 
@@ -231,9 +242,9 @@ class Signup extends Component {
 	
 
 	render(){
-		if(this.state.redirect)
+		if(this.state.isLogin)
 		{
-			return <Redirect to ="/"/>
+			return (<Redirect to ='/'/>);
 		}
 		return(<Container>
 				<GlobalStyle/>

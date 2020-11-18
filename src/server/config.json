@@ -1,0 +1,6 @@
+{
+	"DBConnectionString" : "mongodb://127.0.0.1:27017/test",
+	"DBUser" : "root" ,
+	"DBPass" : "1234" ,
+	"secret": "DDAFEC3623183DD13A429485D9947"
+}

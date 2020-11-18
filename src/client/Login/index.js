@@ -1,5 +1,7 @@
 import React , { Component } from 'react';
 import styled , { createGlobalStyle } from 'styled-components';
+import { SendData } from '../component/Utils';
+import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 
 const GlobalStyle = createGlobalStyle`
@@ -66,30 +68,121 @@ const Button = styled.button`
 	}
 `
 
+
+
 class Login extends Component {
 	state = {
-		userEmail : "" ,
-		userPwd : ""
+		userName : "" ,
+		userPwd : "" ,
+		isLogin : false
 	}
 	constructor(props){
 		super(props);
+
+		this.handleNameChange = this.handleNameChange.bind(this);
+		this.handlePasswordChange = this.handlePasswordChange.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
 		
 	}
 
-	handleSubmit(e){
+	componentDidMount()
+	{
+		var user = localStorage.getItem('user');
+		if(user)
+			this.setState({ isLogin : true});
+	}
+
+    handleSubmit(e)
+	{
 		e.preventDefault();
-	
+		
+		const url = "/api/users/authenticate";
+		
+		const userinfo = {
+			name : this.state.userName ,
+			password : this.state.userPwd
+		}
+		
+		
+		SendData(url , userinfo)
+		.then(function(response){
+			localStorage.setItem('user',response.data);
+			this.setState({ isLogin : true});
+			
+			
+		}.bind(this) , function(reject){
+			
+		})
+		.catch(function(err){
+			
+		})
+	/*
+	host.sendData()
+	.then(function(response){
+		localStorage.setItem('user',response.data);
+		this.setState({ isLogin : true});
+			
+			
+	}.bind(host) , function(reject){
+			
+	})
+	.catch(function(err){
+			
+	})
+	*/
 	}
 	
+	
+	handleNameChange(e){
+		
+		this.setState({
+			userName : e.target.value
+		})
+		
+		
+	}
+	handlePasswordChange(e){
+
+		this.setState({
+			userPwd : e.target.value
+		});
+		
+	}
+/*
+	handleSubmit(e){
+		e.preventDefault();
+		
+		this.sendData()
+		.then(function(response){
+			localStorage.setItem('user',response.data);
+			this.setState({ isLogin : true});
+			
+			
+		}.bind(this) , function(reject){
+			
+		})
+		.catch(function(err){
+			
+		})
+		
+		
+	
+	}
+	*/
+	
 	render(){
+		if(this.state.isLogin)
+		{
+			return(<Redirect to = '/'/>);
+		}
 		return(
 			<Container>
 				<GlobalStyle/>
-				<Form>
+				<Form onSubmit = {this.handleSubmit}>
 					<img src ="/login.svg" width = "100px"></img>
 					<Text>Please sign in</Text>
-					<Input type="text" placeholder = "Email address" BorderRadius = "10px 20px 30px"></Input><br/>
-					<Input type="password"  placeholder = "Password"></Input><br/>
+					<Input type="text" placeholder = "Username" BorderRadius = "10px 20px 30px" value = { this.state.userName } onChange = { this.handleNameChange }></Input><br/>
+					<Input type="password"  placeholder = "Password" value = { this.state.userPwd } onChange = { this.handlePasswordChange }></Input><br/>
 					<Button>Sign in</Button>
 				</Form>
 				

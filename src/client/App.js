@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import Main from './Main'
 import Login from './Login';
 import Signup from './Signup';
+import Board from './Board'
 import { BrowserRouter as Router , Route , Switch } from 'react-router-dom';
 import './App.css';
 
@@ -14,6 +15,7 @@ function App() {
 				 <Route exact path = '/' component = {Main} />
 				 <Route path = '/login' component = {Login}/>
 				 <Route path = '/signup' component = {Signup}/>
+				 <Route path = '/board' component = {Board}/>
 			 </Switch>
 		  </Router>
     </div>
