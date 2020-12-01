@@ -1,6 +1,8 @@
 import React from 'react';
 import logo from './logo.svg';
 import Main from './Main'
+import MainPage from './page/MainPage'
+import LoginPage from './page/LoginPage'
 import Login from './Login';
 import Signup from './Signup';
 import Board from './Board'
@@ -12,8 +14,8 @@ function App() {
     <div className="App">
 		 <Router>
 			 <Switch>
-				 <Route exact path = '/' component = {Main} />
-				 <Route path = '/login' component = {Login}/>
+				 <Route exact path = '/' component = {MainPage} />
+				 <Route path = '/login' component = {LoginPage}/>
 				 <Route path = '/signup' component = {Signup}/>
 				 <Route path = '/board' component = {Board}/>
 			 </Switch>

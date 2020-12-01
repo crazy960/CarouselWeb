@@ -4,7 +4,7 @@ import * as NavbarActions from '../actions/Navbar';
 const initialState = {
 	authenticated : false ,
 	fetching : false ,
-	user : ""
+	user_id : ""
 };
 
 const reducers = ( state = initialState , action) => {
@@ -18,7 +18,7 @@ const reducers = ( state = initialState , action) => {
 				...state,
 				authenticated : true ,
 				fetching : false ,
-				user : action.user
+				user_id : action.payload
 			};
 		case NavbarActions.AUTHENTICATE_REQUEST:
 			return {
@@ -41,7 +41,7 @@ const reducers = ( state = initialState , action) => {
 			return {
 				...state ,
 				authenticated : false,
-				user : ""
+				user_id : ""
 			}
 		case NavbarActions.LOGOUT_REQUEST:
 			return {

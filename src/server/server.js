@@ -11,6 +11,7 @@ app.use(bodyparser.json());
 app.use( bodyparser.urlencoded({ extended: true }));
 app.use(cookieparser());
 
+
 app.use(function (req, res, next) { // 1
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');

@@ -2,13 +2,20 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './client/App';
-import { createStore } from 'redux';
+import { createStore , applyMiddleware } from 'redux';
 import rootReducer from './client/reducers';
+import logger from 'redux-logger';
+import ReduxThunk from 'redux-thunk';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
+import axios from 'axios';
 
-const store = createStore(rootReducer);
-console.log(store.getState);
+
+
+
+const store = createStore(rootReducer , composeWithDevTools( applyMiddleware(ReduxThunk , logger )));
+console.log(store.getState());
 
 
 ReactDOM.render(

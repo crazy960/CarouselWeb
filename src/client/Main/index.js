@@ -5,7 +5,7 @@ import NavSlide from '../component/NavSlide';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 
-
+import NavbarContainer from '../container/NavbarContainer';
 
 class Main extends Component {
 	state = {
@@ -75,6 +75,7 @@ class Main extends Component {
 
 	render(){
 		var nav;
+		/*
 		if(this.state.isLogin)
 		{
 			var user = localStorage.getItem('user');
@@ -82,6 +83,8 @@ class Main extends Component {
 		}
 		else
 			nav = (<Nav isLogin = {this.state.isLogin}></Nav> );
+			*/
+		nav = (<NavbarContainer></NavbarContainer>)
 
 		return(
 				<div>
